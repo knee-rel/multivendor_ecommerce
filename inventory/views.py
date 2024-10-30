@@ -2,8 +2,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from inventory.forms import UserRegistry, ProductForm, OrderForm, CategoryForm
-from inventory.models import Product, Order, Category
+from inventory.forms import UserRegistry, ProductForm, OrderForm, CategoryForm, ShippingTrackingForm
+from inventory.models import Product, Order, Category, ShippingTracking
 
 
 @login_required
@@ -13,10 +13,12 @@ def index(request):
     orders_adm = Order.objects.all()[:2]
     categories = Category.objects.all()[:2]
     products = Product.objects.all()[:2]
+    shippings = ShippingTracking.objects.all()[:2]
     reg_users = len(User.objects.all())
     all_prods = len(Product.objects.all())
     all_orders = len(Order.objects.all())
     all_categories = len(Category.objects.all())
+    all_shippings = len(Category.objects.all())
     context = {
         "title": "Home",
         "orders": orders_user,
@@ -24,10 +26,12 @@ def index(request):
         "users": users,
         "products": products,
         "categories": categories,
+        "shippings": shippings,
         "count_users": reg_users,
         "count_categories": all_categories,
         "count_products": all_prods,
         "count_orders": all_orders,
+        "count_shippings": all_shippings,
     }
     return render(request, "inventory/index.html", context)
 
@@ -74,6 +78,23 @@ def orders(request):
     context = {"title": "Orders", "orders": orders, "form": form}
     return render(request, "inventory/orders.html", context)
 
+@login_required
+def shipping_tracking(request):
+    shipping_entries = ShippingTracking.objects.all()
+    if request.method == "POST":
+        form = ShippingTrackingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("shipping_tracking")
+    else:
+        form = ShippingTrackingForm()
+
+    context = {
+        "title": "Shipping Tracking",
+        "shipping_entries": shipping_entries,
+        "form": form,
+    }
+    return render(request, "inventory/shipping_tracking.html", context)
 
 @login_required
 def users(request):

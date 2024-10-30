@@ -1,0 +1,60 @@
+{% extends 'inventory/base.html' %}
+{% block title %}Shipping Tracking{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Tracking Number</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Shipped Date</th>
+                        <th scope="col">Delivery Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in shipping_entries %}
+                    <tr>
+                        <td>{{ entry.order.id }}</td>
+                        <td>{{ entry.tracking_number }}</td>
+                        <td>{{ entry.get_status_display }}</td>
+                        <td>{{ entry.shipped_date }}</td>
+                        <td>{{ entry.delivery_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if user.is_staff and user.is_superuser %}
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Add Shipping Tracking</h4>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <br>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-4"></div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#shipped_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+        $('#delivery_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+    });
+</script>
+{% endblock %}
