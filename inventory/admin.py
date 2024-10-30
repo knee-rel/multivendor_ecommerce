@@ -1,9 +1,13 @@
 # inventory/admin.py
 from django.contrib import admin
-from inventory.models import Product, Order, UserProfile
+from inventory.models import Product, Order, UserProfile, Category
 
 admin.site.site_header = "Inventory Admin"
 
+class CategoryAdmin(admin.ModelAdmin):  # Admin class for Category
+    model = Category
+    list_display = ("name",)
+    search_fields = ("name",)
 
 class ProductAdmin(admin.ModelAdmin):
     model = Product
@@ -29,3 +33,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Category, CategoryAdmin)

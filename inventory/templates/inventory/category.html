@@ -1,0 +1,48 @@
+{% extends 'inventory/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Categories</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Category Name</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.description }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2">No categories available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if user.is_staff and user.is_superuser %}
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Add a New Category</h4>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <br>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+            <!-- You can add additional content or leave this blank -->
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

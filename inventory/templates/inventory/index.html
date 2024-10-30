@@ -27,7 +27,13 @@
                         </div>
                         <div class="col-md-4">
                             <div class="card text-center p-3">
-                                <h4>All Products <i class="fa-thin fa-users"></i></h4>
+                                <h4>Total Categories <i class="fa-thin fa-users"></i></h4>
+                                <h3><span class="badge bg-primary rounded-pill">{{ count_categories }}</span></h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center p-3">
+                                <h4>Total Products <i class="fa-thin fa-users"></i></h4>
                                 <h3><span class="badge bg-primary rounded-pill">{{ count_products }}</span></h3>
                             </div>
                         </div>
@@ -97,6 +103,35 @@
                     </table>
                     <a class="nav-link text-primary active" aria-current="page" href="{% url 'orders' %}">Go to
                         Orders</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-center">Categories</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Descriptions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                            <tr>
+
+                                <td>{{ category.name }}</td>
+                            </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                    <a class="nav-link text-primary active" aria-current="page" href="{% url 'category' %}">Go to
+                        Categories</a>
                 </div>
             </div>
         </div>

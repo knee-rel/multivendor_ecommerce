@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from inventory.models import Product, Order
+from inventory.models import Product, Order, Category
 
 
 class UserRegistry(UserCreationForm):
@@ -19,6 +19,10 @@ class UserRegistry(UserCreationForm):
             "password2",
         ]
 
+class CategoryForm(forms.ModelForm):  # Form for Category
+    class Meta:
+        model = Category
+        fields = ['name']
 
 class ProductForm(forms.ModelForm):
     class Meta:
