@@ -38,3 +38,21 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f"{self.product} ordered quantity {self.order_quantity}"
+
+class ShippingTracking(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'PND', 'Pending'
+        SHIPPED = 'SHP', 'Shipped'
+        IN_TRANSIT = 'ITR', 'In Transit'
+        DELIVERED = 'DLV', 'Delivered'
+        RETURNED = 'RTN', 'Returned'
+        CANCELLED = 'CNL', 'Cancelled'
+        
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    tracking_number = models.CharField(max_length=50)
+    status = models.CharField(max_length=3, choices=Status.choices, default=Status.PENDING)
+    shipped_date = models.DateTimeField(null=True)
+    delivery_date = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return f"Tracking {self.tracking_number} for Order {self.order.id}"

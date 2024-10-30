@@ -37,6 +37,12 @@
                                 <h3><span class="badge bg-primary rounded-pill">{{ count_products }}</span></h3>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="card text-center p-3">
+                                <h4>Total Shipped<i class="fa-thin fa-users"></i></h4>
+                                <h3><span class="badge bg-primary rounded-pill">{{ count_shippings }}</span></h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,6 +165,36 @@
                     </table>
                     <a class="nav-link text-primary active" aria-current="page" href="{% url 'products' %}">Go to
                         Products</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-center">Shipping Tracking</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Tracking Number</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Shipped Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for shipping in shippings %}
+                            <tr>
+                                <td>{{ shipping.tracking_number }}</td>
+                                <td>{{ shipping.status }}</td>
+                                <td>{{ shipping.shipped_date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a class="nav-link text-primary active" aria-current="page" href="{% url 'shipping_tracking' %}">Go to
+                        Shipping Tracking</a>
                 </div>
             </div>
         </div>
